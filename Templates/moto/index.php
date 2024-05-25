@@ -9,6 +9,13 @@
 </head>
 <body>
     <div class="container">
+        <a href="http://localhost/examPOOZohraB/index.php/moto/add" class="btn btn-success">Ajouter une nouvelle moto</a>
+        <a href="http://localhost/examPOOZohraB/index.php/moto" class="btn btn-primary">Toutes</a>
+        <a href="http://localhost/examPOOZohraB/index.php/moto/Enduro"  class="btn btn-primary">Enduro</a>
+        <a href="http://localhost/examPOOZohraB/index.php/moto/Custom" class="btn btn-primary">Custom</a>
+        <a href="http://localhost/examPOOZohraB/index.php/moto/Sportive" class="btn btn-primary">Sportive</a>
+        <a href="http://localhost/examPOOZohraB/index.php/moto/Roadster" class="btn btn-primary">Roadster</a>
+
         <h1>Liste de motos</h1>
         <?php foreach ($motos as $moto): ?>
         <li>
@@ -17,23 +24,12 @@
             <strong>Type :</strong> <?php echo $moto->getType(); ?><br>
             <strong>Prix :</strong> <?php echo $moto->getPrice(); ?><br>
             <img src="<?php echo $moto->getImage(); ?>" alt="Image de la moto"><br>
-            <a href="show.php<?php echo $moto->getId(); ?>">Voir les détails</a>
+            <a href="http://localhost/examPOOZohraB/index.php/moto/<?php echo($moto->getId());?>">Voir les détails</a>
         </li>
     <?php endforeach; ?>
 
-        <form action="" method="get" class="mb-3">
-            <div class="form-group">
-                <label for="type">Filtrer par type :</label>
-                <select name="type" id="type" class="form-control">
-                    <option value="">Toutes</option>
-                    <option value="Enduro">Enduro</option>
-                    <option value="Custom">Custom</option>
-                    <option value="Sportive">Sportive</option>
-                    <option value="Roadster">Roadster</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Filtrer</button>
-        </form>
+
+
 
         <table class="table">
             <thead>
@@ -50,10 +46,7 @@
             </tbody>
         </table>
 
-        <a href="add.php" class="btn btn-success">Ajouter une nouvelle moto</a>
-        <a href="show.php" class="btn btn-success">Voir les détails</a>
-        <a href="edit.php" class="btn btn-success">Editer une moto </a>
-        <a href="delete.php" class="btn btn-success">Supprimer une moto </a>
+
     </div>
 
     <!-- Intégration de Bootstrap JavaScript pour les fonctionnalités avancées -->

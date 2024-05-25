@@ -21,7 +21,7 @@ class DatabaseManager{
             $password = "";
             
             // parametres pour la connexion
-            $this->connection = new PDO("mysql:host=" . $host . ";port=3307;dbname=" . $databaseName . ";charset=utf8", $user, $password);
+            $this->connection = new PDO("mysql:host=" . $host . ";port=3306;dbname=" . $databaseName . ";charset=utf8", $user, $password);
             
             //connexion avec méthode privée 
             $this->configPdo();

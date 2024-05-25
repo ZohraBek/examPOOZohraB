@@ -20,7 +20,7 @@ class Moto {
     }
     
     // Fonction qui permet de creer l'objet Moto avec les données d'un tableau 
-    static public function fromArray($array):self{
+    public static function fromArray($array):self{
         return new self($array["id"], $array["brand"], $array["model"], $array["type"], $array["price"], $array["image"]);
     }
 

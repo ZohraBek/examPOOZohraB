@@ -20,8 +20,11 @@
                 <img src="<?php echo $moto->getImage(); ?>" class="img-fluid" alt="Image de la moto">
             </div>
             <div class="card-footer">
-                <a href="edit.html?id=<?php echo $moto->getId(); ?>" class="btn btn-primary">Éditer</a>
-                <a href="delete.php?id=<?php echo $moto->getId(); ?>" class="btn btn-danger">Supprimer</a>
+                <a href="http://localhost/examPOOZohraB/index.php/moto/edit/<?php echo $moto->getId(); ?>" class="btn btn-primary">Éditer</a>
+                <form method="POST" action="http://localhost/examPOOZohraB/index.php/moto/delete/<?php echo $moto->getId(); ?>"">
+                    <button class="btn btn-danger">Supprimer</button>
+                </form>
+
             </div>
         </div>
     </div>

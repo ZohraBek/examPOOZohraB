@@ -13,25 +13,29 @@ use Src\Manager\MotoManager;
 
 class MotoController
 {
+    private MotoManager $motoManager;
+    public function __construct()
+    {
+        $this->motoManager = new MotoManager();
+    }
+
     // Route: /moto
     public function getAll()
     {
         // Récupérer toutes les motos depuis le MotoManager
-        $motoManager = new MotoManager();
-        $motos = $motoManager->findAll();
-        $moto=[];
+        $motos = $this->motoManager->findAll();
+
         //  template qui affiche toutes les motos
-        include(__DIR__ . "/../../Templates/moto/index.php");
+        include("Templates/moto/index.php");
     }
 
     // Route: /moto/$id
     public function getById($id)
     {
         // Récupérer une moto par son ID depuis le MotoManager
-        $motoManager = new MotoManager();
-        $moto = $motoManager->findById($id);
+        $moto = $this->motoManager->findById($id);
         // template qui affiche les details d'une moto 
-        include(__DIR__ . "/../../Templates/moto/show.php");
+        include("Templates/moto/show.php");
      ;
     }
 
@@ -39,14 +43,10 @@ class MotoController
     public function getByType($type)
     {
         // Récupérer les motos par type depuis le MotoManager
-        $motoManager = new MotoManager();
-        $moto = $motoManager->findByType($type);
-        if($moto) {
-            echo json_encode($moto);
-        }
-        else {
-            echo "Moto NOT FOUND";
-        }
+        $motos = $this->motoManager->findByType($type);
+
+        include("Templates/moto/index.php");
+
     }
        // echo "ROUTE: /moto/$type   (getByType)";
 
@@ -54,18 +54,22 @@ class MotoController
     // Route: /moto/add/
     public function add() {
     if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST')
-        //SI tous les champs sont fournies
         {
+            // TODO verif des param
+
+            //SI tous les champs sont fournies
             $moto = new Moto(0, $_POST['brand'], $_POST['model'], $_POST['type'], $_POST['price'], $_POST['image']);
             $this->motoManager->add($moto);
-            echo json_encode("Ajout avec succes");
-            include(__DIR__ . "/../../Templates/moto/add.php");
+
+            // Si tu as un header Location, inutile d'afficher des choses avant comme on redirige
+//            echo json_encode("Ajout avec succes");
+//            include(__DIR__ . "/../../Templates/moto/add.php");
             header('Location: http://localhost/examPOOzohra/index.php/moto/');
         }
         else
         {
             // Template pour ajout d'une moto 
-            include(__DIR__ . "/../../Templates/moto/add.php");
+            include("Templates/moto/add.php");
         }
     }
         
@@ -75,44 +79,42 @@ class MotoController
     // Route: /moto/edit/$id
     public function edit(int $id)
     { 
-    $motoManager = new MotoManager();
-    $moto = $motoManager->findById($id);
+
+        $moto = $this->motoManager->findById($id);
+        if($moto === false) {
+            echo "Moto non trouvée";
+            exit();
+        }
 
         if(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST'){
-            $moto = new Moto($id, $_POST['brand'], $_POST['model'], $_POST['type'], $_POST['price'], $_POST['image']);
+
+            // TODO verif des param
+            $moto->setBrand($_POST['brand']);
+            $moto->setModel($_POST['model']);
+            $moto->setType($_POST['type']);
+            $moto->setPrice($_POST['price']);
+            $moto->setImage($_POST['image']);
+
             $this->motoManager->edit($moto);
-            echo json_encode("Modification avec succes");
-            include(__DIR__ . "/../../Templates/moto/edit.php");
-            header('Location: /moto');
+
+            // Si tu as un header Location, inutile d'afficher des choses avant comme on redirige
+//            echo json_encode("Modification avec succes");
+//            include("Templates/moto/edit.php");
+            header('Location: http://localhost/examPOOzohra/index.php/moto/');
         }
-        else {
-            $moto = $this->motoManager->findById($id);
-            if($moto) {
-                echo json_encode($moto);
-            }
-            else {
-                echo "Moto non trouvée";
-            }
-        }
+
 
         // Afficher le formulaire d'édition de moto
-        include(__DIR__ . "/../../Templates/moto/edit.php");
-
-        echo "ROUTE: /moto/edit/$id   (edit)";
+        include("Templates/moto/edit.php");
     }
 
     // Route: /moto/delete/$id
     public function delete($id)
     {
         if(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-            $moto = $this->motoManager->delete($id);
-            echo json_encode("Supprimé avec succes");
-            include(__DIR__ . "/../../Templates/moto/delete.php");
-            header('Location: /moto');
+            $this->motoManager->delete($id);
+            header('Location: http://localhost/examPOOZohraB/index.php/moto/');
         }
-        else {
-            echo "Moto not found";
-        }
-        echo "ROUTE: /moto/delete/$id   (delete)";
+
     }
 }

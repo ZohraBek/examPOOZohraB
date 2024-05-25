@@ -26,7 +26,8 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `motos`
 --
-
+CREATE DATABASE moto_concession;
+USE moto_concession;
 DROP TABLE IF EXISTS `motos`;
 CREATE TABLE IF NOT EXISTS `motos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
